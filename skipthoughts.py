@@ -20,8 +20,8 @@ profile = False
 #-----------------------------------------------------------------------------#
 # Specify model and table locations here
 #-----------------------------------------------------------------------------#
-path_to_models = '/u/rkiros/public_html/models/'
-path_to_tables = '/u/rkiros/public_html/models/'
+path_to_models = '/home/dan/Documents/skip-thoughts/data/'
+path_to_tables = '/home/dan/Documents/skip-thoughts/data/'
 #-----------------------------------------------------------------------------#
 
 path_to_umodel = path_to_models + 'uni_skip.npz'
@@ -92,7 +92,9 @@ def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False)
     Encode sentences in the list X. Each entry will return a vector
     """
     # first, do preprocessing
+	#$ "Proprocessing" here means to use NLTK to tag each word in the sentence.
     X = preprocess(X)
+    print X
 
     # word dictionary and init
     d = defaultdict(lambda : 0)
@@ -103,11 +105,13 @@ def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False)
 
     # length dictionary
     ds = defaultdict(list)
-    captions = [s.split() for s in X]
-    for i,s in enumerate(captions):
+    captions = [s.split() for s in X] #$ "captions" is the number of characters in the sentence.
+    for i,s in enumerate(captions): #$ This loops through characters and divides them into spaces and non-spaces
         ds[len(s)].append(i)
 
     # Get features. This encodes by length, in order to avoid wasting computation
+	#$ We encode sentences by order of length. "k" is the number of characters in the sentence.
+	#$ This is why it prints numbers when you encode sentences.
     for k in ds.keys():
         if verbose:
             print k
@@ -115,6 +119,9 @@ def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False)
         for minibatch in range(numbatches):
             caps = ds[k][minibatch::numbatches]
 
+			#$ If we're using an end-of-sentence token, add one to the length of the matrix.
+			#$ Otherwise, it's just a matrix of length (length of a particular sentence) by height
+			#$ (length of ...)
             if use_eos:
                 uembedding = numpy.zeros((k+1, len(caps), model['uoptions']['dim_word']), dtype='float32')
                 bembedding = numpy.zeros((k+1, len(caps), model['boptions']['dim_word']), dtype='float32')
@@ -137,6 +144,7 @@ def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False)
                 uff = model['f_w2v'](uembedding, numpy.ones((len(caption)+1,len(caps)), dtype='float32'))
                 bff = model['f_w2v2'](bembedding, numpy.ones((len(caption)+1,len(caps)), dtype='float32'))
             else:
+                print("Caption length: ", len(caption), "Caps length: ", len(caps)) #$
                 uff = model['f_w2v'](uembedding, numpy.ones((len(caption),len(caps)), dtype='float32'))
                 bff = model['f_w2v2'](bembedding, numpy.ones((len(caption),len(caps)), dtype='float32'))
             if use_norm:
