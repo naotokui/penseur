@@ -92,7 +92,8 @@ def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False)
     Encode sentences in the list X. Each entry will return a vector
     """
     # first, do preprocessing
-	#$ "Proprocessing" here means to use NLTK to tag each word in the sentence.
+	#$ "Proprocessing" here means to use NLTK to separate "don't" to "do" "n't" and stuff like that.
+	#$ They're not pos-tagged. Punctuation and all words are separated by spaces.
     X = preprocess(X)
     print X
 
@@ -100,14 +101,15 @@ def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False)
     d = defaultdict(lambda : 0)
     for w in model['utable'].keys():
         d[w] = 1
+	#$ Creates feature matrices with length number-of-sentences and height as specified in uoptions
     ufeatures = numpy.zeros((len(X), model['uoptions']['dim']), dtype='float32')
     bfeatures = numpy.zeros((len(X), 2 * model['boptions']['dim']), dtype='float32')
 
     # length dictionary
     ds = defaultdict(list)
     captions = [s.split() for s in X] #$ "captions" is the number of characters in the sentence.
-    for i,s in enumerate(captions): #$ This loops through characters and divides them into spaces and non-spaces
-        ds[len(s)].append(i)
+    for i,s in enumerate(captions): #$ This loops through sentences and stores the length in a dictionary.
+        ds[len(s)].append(i)		#$ Length is key, sentence index is value (can have multiple)
 
     # Get features. This encodes by length, in order to avoid wasting computation
 	#$ We encode sentences by order of length. "k" is the number of characters in the sentence.
