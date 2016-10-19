@@ -10,21 +10,21 @@ import penseur
 p = penseur.Penseur()
 
 # Define a list of sentences
-sen = ['Where is the dog?',\
+sentences = ['Where is the dog?',\
 'What have you done with the cat?',\
 'Why have you killed all my animals?',\
 'You\'re a monster!',\
 'Get out of my house!']
 
 # You can add the sentences to the vector space using the encode method
-p.encode(sen)
+p.encode(sentences)
 
 # You can save the encodings to a file using the save method.
 # The parameter is simply a keyword for the save file
-p.save('dead_animals')
+p.save('keyword')
 
 # Once you've saved encodings to a file, you can load them back into the model using the load method
-p.load('test')
+p.load('keyword')
 
 # Test sentences against the vector space. This will return the sentences that most resemble the input
 p.nn("Where are my pants?")
