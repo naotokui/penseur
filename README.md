@@ -10,12 +10,17 @@ import penseur
 p = penseur.Penseur()
 
 # Define a list of sentences
-sen = ['Where is the dog?','What have you done with the cat?','Why have you killed all my animals?','You\'re a monster!','Get out of my house!']
+sen = ['Where is the dog?',\
+'What have you done with the cat?',\
+'Why have you killed all my animals?',\
+'You\'re a monster!',\
+'Get out of my house!']
 
 # You can add the sentences to the vector space using the encode method
 p.encode(sen)
 
-# You can save the encodings to a file using the save method. The parameter is simply a keyword for the save file
+# You can save the encodings to a file using the save method.
+# The parameter is simply a keyword for the save file
 p.save('dead_animals')
 
 # Once you've saved encodings to a file, you can load them back into the model using the load method
