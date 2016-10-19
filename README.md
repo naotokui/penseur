@@ -1,3 +1,33 @@
+# penseur
+This code provides an interface for the original skip-thought vector code by Ryan Kiros et al (2015).
+
+## Usage
+
+The available methods are demonstrated below.
+
+```python
+import penseur
+p = penseur.Penseur()
+
+# Define a list of sentences
+sen = ['Where is the dog?','What have you done with the cat?','Why have you killed all my animals?','You\'re a monster!','Get out of my house!']
+
+# You can add the sentences to the vector space using the encode method
+p.encode(sen)
+
+# You can save the encodings to a file using the save method. The parameter is simply a keyword for the save file
+p.save('dead_animals')
+
+# Once you've saved encodings to a file, you can load them back into the model using the load method
+p.load('test')
+
+# Test sentences against the vector space. This will return the top sentences that most resemble the input
+p.nn("Where are my pants?")
+
+# You can also request a specific number of results
+p.nn("Where are my pants?", 10)
+```
+
 # skip-thoughts
 
 Sent2Vec encoder and training code from the paper [Skip-Thought Vectors](http://arxiv.org/abs/1506.06726).
