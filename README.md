@@ -26,7 +26,7 @@ p.save('dead_animals')
 # Once you've saved encodings to a file, you can load them back into the model using the load method
 p.load('test')
 
-# Test sentences against the vector space. This will return the top sentences that most resemble the input
+# Test sentences against the vector space. This will return the sentences that most resemble the input
 p.nn("Where are my pants?")
 
 # You can also request a specific number of results
