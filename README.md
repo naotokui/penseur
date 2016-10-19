@@ -29,7 +29,7 @@ p.load('keyword')
 # Test sentences against the vector space. This will return the sentences that most resemble the input
 p.nn("Where are my pants?")
 
-# You can also request a specific number of results
+# You can also request a specific number of results (default is 5)
 p.nn("Where are my pants?", 10)
 ```
 
