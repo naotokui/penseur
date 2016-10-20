@@ -6,7 +6,7 @@ import os
 import theano
 import theano.tensor as tensor
 
-import cPickle as pkl
+import sPickle as pkl
 import numpy
 import copy
 import nltk
