@@ -28,6 +28,22 @@ class Penseur:
 		f = [self.vectors, self.current_text, self.num_sentences]
 		pickle.s_dump(f, open(name + '_enc.spkl', 'w'))
 
-	def nn(self, query_sentence, num_results=5):
+	def get_closest_sentences(self, query_sentence, num_results=5):
 		return skipthoughts.nn(self.model, self.current_text, self.vectors, query_sentence, num_results)
+
+	def get_vector(self, query_sentence):
+		return skipthoughts.vector(self.model, self.current_text, self.vectors, query_sentence)
+
+	def get_sentence(self, query_vector):
+		return skipthoughts.sentence(self.model, self.current_text, self.vectors, query_vector)
+
+	def analogy(self, query_sentence):
+		with open('test_q&a.txt', 'r') as f:
+			s = f.readlines()
+		av = []
+		for i in xrange(0, len(s), 3):
+			cv = self.get_vector(s[i+1].replace('\n', '')) - self.get_vector(s[i].replace('\n', ''))
+			av.append(cv)
+		new_av = np.average(np.array(av), axis=0)
+		return self.get_sentence(self.get_vector(query_sentence) + new_av)
 

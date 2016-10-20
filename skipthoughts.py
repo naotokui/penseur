@@ -6,7 +6,7 @@ import os
 import theano
 import theano.tensor as tensor
 
-import sPickle as pkl
+import cPickle as pkl
 import numpy
 import copy
 import nltk
@@ -95,7 +95,6 @@ def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False)
 	#$ "Proprocessing" here means to use NLTK to separate "don't" to "do" "n't" and stuff like that.
 	#$ They're not pos-tagged. Punctuation and all words are separated by spaces.
     X = preprocess(X)
-    print X
 
     # word dictionary and init
     d = defaultdict(lambda : 0)
@@ -146,7 +145,7 @@ def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False)
                 uff = model['f_w2v'](uembedding, numpy.ones((len(caption)+1,len(caps)), dtype='float32'))
                 bff = model['f_w2v2'](bembedding, numpy.ones((len(caption)+1,len(caps)), dtype='float32'))
             else:
-                print("Caption length: ", len(caption), "Caps length: ", len(caps)) #$
+#                print("Caption length: ", len(caption), "Caps length: ", len(caps)) #$
                 uff = model['f_w2v'](uembedding, numpy.ones((len(caption),len(caps)), dtype='float32'))
                 bff = model['f_w2v2'](bembedding, numpy.ones((len(caption),len(caps)), dtype='float32'))
             if use_norm:
@@ -184,16 +183,29 @@ def nn(model, text, vectors, query, k=5):
     vectors: the corresponding representations for text
     query: a string to search
     """
-    qf = encode(model, [query])
+    qf = encode(model, [query], verbose=False)
     qf /= norm(qf)
     scores = numpy.dot(qf, vectors.T).flatten()
     sorted_args = numpy.argsort(scores)[::-1]
     sentences = [text[a] for a in sorted_args[:k]]
-    print 'QUERY: ' + query
-    print 'NEAREST: '
-    for i, s in enumerate(sentences):
-        print s, sorted_args[i]
+#    print 'QUERY: ' + query #$
+#    print 'NEAREST: ' #$
+    sorted_sentences = []
+#    for i, s in enumerate(sentences): #$
+#        print s, sorted_args[i] #$
+    for i in xrange(len(sentences)): #$
+        sorted_sentences.append(sentences[i][0]) #$
+    return sorted_sentences #$
 
+def vector(model, text, vectors, query): #$
+    qf = encode(model, [query], verbose=False) #$
+    return qf / norm(qf) #$
+
+def sentence(model, text, vectors, qf): #$
+    scores = numpy.dot(qf, vectors.T).flatten() #$
+    sorted_args = numpy.argsort(scores)[::-1] #$
+    sentences = [text[a] for a in sorted_args[:1]] #$
+    return sentences[0][0] #$
 
 def word_features(table):
     """
