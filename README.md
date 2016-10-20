@@ -21,16 +21,22 @@ p.encode(sentences)
 
 # You can save the encodings to a file using the save method.
 # The parameter is simply a keyword for the save file
-p.save('keyword')
+p.save('larry_king')
 
 # Once you've saved encodings to a file, you can load them back into the model using the load method
-p.load('keyword')
+p.load('larry_king')
 
 # Test sentences against the vector space. This will return the sentences that most resemble the input
-p.nn("Where are my pants?")
+p.get_closest_sentences("Where are my pants?")
 
 # You can also request a specific number of results (default is 5)
-p.nn("Where are my pants?", 10)
+p.get_closest_sentences("Why can't every lightsaber be the same color as mine?", 10)
+
+# Use the get_vector method to return the vector for a specific sentence
+vector = p.get_vector("How could you let the raptors into the building?")
+
+# Use the get_sentence method to get the closest sentence to a vector (in the embedding space)
+sentence = p.get_sentence(vector)
 ```
 
 # skip-thoughts
