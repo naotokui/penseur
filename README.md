@@ -28,7 +28,6 @@ p.load('larry_king')
 
 # Test sentences against the vector space. This will return the sentences that most resemble the input
 p.get_closest_sentences("Honey, where are my pants?")
-
 # You can also request a specific number of results (default is 5)
 p.get_closest_sentences("Honey, where are my pants?", 10)
 
@@ -40,7 +39,6 @@ sentence = p.get_sentence(vector)
 
 # Perform an analogy using pre-processed text files, defaulting to using the Larry King question set
 p.analogy("Why can't every lightsaber be the same color as mine?")
-
 # Perform an analogy using a different text file
 p.analogy("Why can't every lightsaber be the same color as mine?", "different_text_filename")
 ```
