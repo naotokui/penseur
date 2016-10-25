@@ -10,11 +10,11 @@ import penseur
 p = penseur.Penseur()
 
 # Define a list of sentences
-sentences = ['Where is the dog?',\
-'What have you done with the cat?',\
-'Why have you killed all my animals?',\
-'You\'re a monster!',\
-'Get out of my house!']
+sentences = ["Where is the dog?",\
+"What have you done with the cat?",\
+"Why have you killed all my animals?",\
+"You're a monster!",\
+"Get out of my house!"]
 
 # You can add the sentences to the vector space using the encode method
 p.encode(sentences)
@@ -27,16 +27,22 @@ p.save('larry_king')
 p.load('larry_king')
 
 # Test sentences against the vector space. This will return the sentences that most resemble the input
-p.get_closest_sentences("Where are my pants?")
+p.get_closest_sentences("Honey, where are my pants?")
 
 # You can also request a specific number of results (default is 5)
-p.get_closest_sentences("Why can't every lightsaber be the same color as mine?", 10)
+p.get_closest_sentences("Honey, where are my pants?", 10)
 
 # Use the get_vector method to return the vector for a specific sentence
 vector = p.get_vector("How could you let the raptors into the building?")
 
 # Use the get_sentence method to get the closest sentence to a vector (in the embedding space)
 sentence = p.get_sentence(vector)
+
+# Perform an analogy using pre-processed text files, defaulting to using the Larry King question set
+p.analogy("Why can't every lightsaber be the same color as mine?")
+
+# Perform an analogy using a different text file
+p.analogy("Why can't every lightsaber be the same color as mine?", "different_text_filename")
 ```
 
 # skip-thoughts
