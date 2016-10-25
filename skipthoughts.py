@@ -194,7 +194,7 @@ def nn(model, text, vectors, query, k=5):
 #    for i, s in enumerate(sentences): #$
 #        print s, sorted_args[i] #$
     for i in xrange(len(sentences)): #$
-        sorted_sentences.append(sentences[i][0]) #$
+        sorted_sentences.append(sentences[i]) #$
     return sorted_sentences #$
 
 def vector(model, text, vectors, query): #$
@@ -205,7 +205,7 @@ def sentence(model, text, vectors, qf): #$
     scores = numpy.dot(qf, vectors.T).flatten() #$
     sorted_args = numpy.argsort(scores)[::-1] #$
     sentences = [text[a] for a in sorted_args[:1]] #$
-    return sentences[0][0] #$
+    return sentences[0] #$
 
 def word_features(table):
     """
