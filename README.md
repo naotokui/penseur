@@ -41,6 +41,9 @@ sentence = p.get_sentence(vector)
 p.analogy("Why can't every lightsaber be the same color as mine?")
 # Perform an analogy using a different text file
 p.analogy("Why can't every lightsaber be the same color as mine?", "different_text_filename")
+
+# Display the sentence encodings in a 2D visual plot. Only works with small corpora.
+p.display_PCA_plot()
 ```
 
 # skip-thoughts
