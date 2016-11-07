@@ -68,7 +68,7 @@ class Penseur:
 			plt.title("PCA plot")
 			plt.show()
 		except:
-			print("Not enough Memory; corpus too large for this function")
+			print("Not enough memory; corpus too large for this function")
 
 	# Performs PCA on the sentence encodings
 	def PCA(self, data, rescaled_dims=2):
