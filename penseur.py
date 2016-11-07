@@ -65,7 +65,7 @@ class Penseur:
 			for i, v in enumerate(plot_data):
 				plt.scatter(v[0], v[1])
 				plt.annotate(self.sentences[i], (v[0], v[1]))
-			plt.title("PCA plot: ")
+			plt.title("PCA plot")
 			plt.show()
 		except:
 			print("Not enough Memory; corpus too large for this function")
