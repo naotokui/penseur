@@ -42,8 +42,13 @@ p.analogy("Why can't every lightsaber be the same color as mine?")
 # Perform an analogy using a different text file
 p.analogy("Why can't every lightsaber be the same color as mine?", "different_text_filename")
 
-# Display the sentence encodings in a 2D visual plot. Only works with small corpora.
+# Display the sentence encodings in a 2D plot. Only works with small corpora.
 p.display_PCA_plot()
+
+# Display the sentence encodings in a 2D plot, but with axis constraints s.t. the data is organized how you choose.
+x_sentences = ['I have 10 cats.', 'I have 100 cats.']
+y_sentences = ['You are my friend.', 'You are my enemy.']
+p.display_PCA_plot_with_constraints(x_sentences, y_sentences)
 ```
 
 # skip-thoughts
