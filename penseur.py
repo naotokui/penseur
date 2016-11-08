@@ -95,3 +95,33 @@ class Penseur:
 
 		return np.dot(evecs.T, plot_data.T).T
 
+	# Flattens vectors for PCA
+	def flatten(self, data, x_vector, y_vector):
+		vectors = np.array([x_vector, y_vector])
+		return np.dot(vectors, data.T).T
+
+	# Displays the sentence encodings after PCA with axis constraints
+	def display_PCA_plot_with_constraints(self, x_axis_sentences, y_axis_sentences):
+		if len(x_axis_sentences) != 2 or len(y_axis_sentences) != 2:
+			sys.exit("Displaying PCA plot with constraints: expected 4 sentences. Got " + \
+			str(len(x_axis_sentences)) + ' and ' + str(len(y_axis_sentences)))
+
+		x_axis = self.get_vector(x_axis_sentences[0]) - self.get_vector(x_axis_sentences[1])
+		y_axis = self.get_vector(y_axis_sentences[0]) - self.get_vector(y_axis_sentences[1])
+
+		data = []
+		for s in self.sentences:
+			data.append(self.get_vector(s))
+
+		flattened_data = self.flatten(np.squeeze(np.array(data)), x_axis, y_axis)
+		plt.xlabel = ('[' + x_axis_sentences[0][:20] + '...] - [' + x_axis_sentences[1][:20] + '...]')
+		plt.ylabel = ('[' + y_axis_sentences[0][:20] + '...] - [' + y_axis_sentences[1][:20] + '...]')
+
+		for i, v in enumerate(np.squeeze(flattened_data)):
+			plt.scatter(v[0], v[1])
+			plt.annotate(self.sentences[i], (v[0], v[1]))
+
+		plt.title("Flattened data")
+		plt.show()
+
+
