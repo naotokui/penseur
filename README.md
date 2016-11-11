@@ -3,6 +3,8 @@ This code provides an interface for the original skip-thought vector code by Rya
 
 ## Usage
 
+For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations form 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so).
+
 The available methods are demonstrated below.
 
 ```python
