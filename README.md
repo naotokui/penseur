@@ -31,7 +31,7 @@ p.get_closest_sentences("Honey, where are my pants?")
 # You can also request a specific number of results (default is 5)
 p.get_closest_sentences("Honey, where are my pants?", 10)
 
-# Test words against the vector space. This will return the sentences that most resemble the input
+# Test words against the vector space. This will return the words that are nearest to the query word
 p.get_closest_words("dog")
 # You can also request a specific number of results (default is 5)
 p.get_closest_words("dog", 10)
