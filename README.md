@@ -59,7 +59,7 @@ y_sentences = ['You are my friend.', 'You are my enemy.']
 p.display_PCA_plot_with_constraints(x_sentences, y_sentences)
 ```
 
-The methods below are available in penseur_utils.py.
+The methods below are available in penseur_utils.py. (CURRENTLY IN ALPHA, NOT GUARANTEED TO WORK)
 
 ```python
 # Train a new model from scratch.
