@@ -61,7 +61,7 @@ p.display_PCA_plot_with_constraints(x_sentences, y_sentences)
 
 The methods below are available in penseur_utils.py.
 
-```
+```python
 # Train a new model from scratch.
 import penseur_utils, cPickle
 name = 'larry_king'
