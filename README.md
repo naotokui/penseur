@@ -31,6 +31,11 @@ p.get_closest_sentences("Honey, where are my pants?")
 # You can also request a specific number of results (default is 5)
 p.get_closest_sentences("Honey, where are my pants?", 10)
 
+# Test words against the vector space. This will return the sentences that most resemble the input
+p.get_closest_words("dog")
+# You can also request a specific number of results (default is 5)
+p.get_closest_words("dog", 10)
+
 # Use the get_vector method to return the vector for a specific sentence
 vector = p.get_vector("How could you let the raptors into the building?")
 
