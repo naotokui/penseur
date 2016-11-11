@@ -3,7 +3,7 @@ This code provides an interface for the original skip-thought vector code by Rya
 
 ## Usage
 
-For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations form 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so).
+For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations from 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so).
 
 The available methods are demonstrated below.
 
@@ -57,6 +57,25 @@ p.display_PCA_plot()
 x_sentences = ['I have 10 cats.', 'I have 100 cats.']
 y_sentences = ['You are my friend.', 'You are my enemy.']
 p.display_PCA_plot_with_constraints(x_sentences, y_sentences)
+```
+
+The methods below are available in penseur_utils.py.
+
+```
+# Train a new model from scratch.
+import penseur_utils, cPickle
+name = 'larry_king'
+sentences = cPickle.load(open('larry_king_sen.p', 'r'))
+penseur_utils.train_model(name, sentences)
+
+# Train a decoder from scratch.
+import penseur, cPickle
+p = penseur.Penseur()
+name = 'larry_king'
+sentences = cPickle.load(open('larry_king_sen.p', 'r'))
+encodings = p.encode(sentences)
+import penseur_utils
+penseur_utils.train_decoder(name, sentences, encodings, p.model)
 ```
 
 # skip-thoughts
