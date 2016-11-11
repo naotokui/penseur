@@ -190,7 +190,7 @@ def nn(model, text, vectors, query, k=5):
     sentences = [text[a] for a in sorted_args[:k]]
 #    print 'QUERY: ' + query #$
 #    print 'NEAREST: ' #$
-    sorted_sentences = []
+    sorted_sentences = [] #$
 #    for i, s in enumerate(sentences): #$
 #        print s, sorted_args[i] #$
     for i in xrange(len(sentences)): #$
@@ -228,10 +228,14 @@ def nn_words(table, wordvecs, query, k=10):
     scores = numpy.dot(qf, wordvecs.T).flatten()
     sorted_args = numpy.argsort(scores)[::-1]
     words = [keys[a] for a in sorted_args[:k]]
-    print 'QUERY: ' + query
-    print 'NEAREST: '
-    for i, w in enumerate(words):
-        print w
+#    print 'QUERY: ' + query #$
+#    print 'NEAREST: ' #$
+    sorted_words = [] #$
+#    for i, w in enumerate(words): #$
+#        print w #$
+    for i in xrange(len(words)):
+        sorted_words.append(str(words[i]))
+    return sorted_words
 
 
 def _p(pp, name):
