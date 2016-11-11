@@ -10,6 +10,7 @@ class Penseur:
 		self.sentences = None
 		self.vectors = None
 		self.analogy_vector = None
+		self.word_table = None
 
 	# Loads both an encoding file and its sentences from disc
 	def load(self, filename):
@@ -26,9 +27,15 @@ class Penseur:
 		np.save(open(filename + '_enc.np', 'w'), self.vectors)
 		pickle.dump(self.sentences, open(filename + '_sen.p', 'w'))
 
-	# Returns a list of the sentences closest to the input
+	# Returns a list of the sentences closest to the input sentence
 	def get_closest_sentences(self, query_sentence, num_results=5):
 		return skipthoughts.nn(self.model, self.sentences, self.vectors, query_sentence, num_results)
+
+	# Returns a list of the words closest to the input word
+	def get_closest_words(self, query_word):
+		if self.word_table is None:
+			self.word_table = skipthoughts.word_features(self.model['btable'])
+		return skipthoughts.nn_words(self.model['btable'], self.word_table, query_word)
 
 	# Returns the vector of a query sentence within the current embedding space
 	def get_vector(self, query_sentence):
