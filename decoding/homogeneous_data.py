@@ -3,7 +3,7 @@ import copy
 import sys
 
 #------------------------------------------------------------------------------
-sys.path.append('/u/rkiros/research/skipthoughts/')
+sys.path.append('..')
 import skipthoughts
 #------------------------------------------------------------------------------
 
