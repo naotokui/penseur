@@ -16,14 +16,15 @@ from search import gen_sample
 #-----------------------------------------------------------------------------#
 # Specify model and dictionary locations here
 #-----------------------------------------------------------------------------#
-path_to_model = '/u/rkiros/research/semhash/models/toydec.npz'
-path_to_dictionary = '/ais/gobi3/u/rkiros/flickr8k/dictionary.pkl'
+#path_to_model = '/u/rkiros/research/semhash/models/toydec.npz'
+#path_to_dictionary = '/ais/gobi3/u/rkiros/flickr8k/dictionary.pkl'
 #-----------------------------------------------------------------------------#
 
-def load_model():
+def load_model(path_to_model, path_to_dictionary):
     """
     Load a trained model for decoding
     """
+
     # Load the worddict
     print 'Loading dictionary...'
     with open(path_to_dictionary, 'rb') as f:
