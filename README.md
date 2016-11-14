@@ -62,20 +62,38 @@ p.display_PCA_plot_with_constraints(x_sentences, y_sentences)
 The methods below are available in penseur_utils.py. (CURRENTLY IN ALPHA, NOT GUARANTEED TO WORK)
 
 ```python
-# Train a new model from scratch.
+# Train a new model from scratch
 import penseur_utils, cPickle
 name = 'larry_king'
 sentences = cPickle.load(open('larry_king_sen.p', 'r'))
 penseur_utils.train_model(name, sentences)
 
-# Train a decoder from scratch.
+# Train a decoder from scratch
 import penseur, cPickle
 p = penseur.Penseur()
-name = 'larry_king'
-sentences = cPickle.load(open('larry_king_sen.p', 'r'))
-encodings = p.encode(sentences)
+name = 'new_datas'
+sentences = ["Where is the dog?",\
+	"What have you done with the cat?",\
+	"Why have you killed all my animals?",\
+	"You're a monster!",\
+	"Get out of my house!",\
+	"Why are you here?",\
+	"Get out of my mansion!",\
+	"Get rid of my house!",\
+	"Where have you put the cat?",\
+	"Where is the dog with spots?"]
 import penseur_utils
-penseur_utils.train_decoder(name, sentences, encodings, p.model)
+epochs = 6
+savefreq = 5
+penseur_utils.train_decoder(name, sentences, p.model, epochs, savefreq)
+
+# Load a decoder
+dec = penseur_utils.load_decoder(name)
+
+# Decode a vector (returning either 1 sentence or n sentences, default is 1)
+vector = p.get_vector('Where are the animals?')
+just_one_sentence = penseur_utils.decode(dec, vector)
+three_sentences = penseur_utils.decode(dec, vector, 3)
 ```
 
 # skip-thoughts
