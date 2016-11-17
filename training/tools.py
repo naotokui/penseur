@@ -22,12 +22,12 @@ from model import init_params, build_encoder, build_encoder_w2v
 #-----------------------------------------------------------------------------#
 # Specify model and dictionary locations here
 #-----------------------------------------------------------------------------#
-path_to_model = '/u/rkiros/research/semhash/models/toy.npz'
-path_to_dictionary = '/ais/gobi3/u/rkiros/bookgen/book_dictionary_large.pkl'
-path_to_word2vec = '/ais/gobi3/u/rkiros/word2vec/GoogleNews-vectors-negative300.bin'
+#path_to_model = '/u/rkiros/research/semhash/models/toy.npz'
+#path_to_dictionary = '/ais/gobi3/u/rkiros/bookgen/book_dictionary_large.pkl'
+#path_to_word2vec = '/ais/gobi3/u/rkiros/word2vec/GoogleNews-vectors-negative300.bin'
 #-----------------------------------------------------------------------------#
 
-def load_model(embed_map=None):
+def load_model(path_to_model, path_to_dictionary, path_to_word2vec, embed_map=None):
     """
     Load all model components + apply vocab expansion
     """
@@ -82,7 +82,7 @@ def load_model(embed_map=None):
 
     return model
 
-def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False):
+def encode(model, X, use_norm=True, verbose=False, batch_size=128, use_eos=False):
     """
     Encode sentences in the list X. Each entry will return a vector
     """
@@ -149,7 +149,7 @@ def preprocess(text):
         X.append(result)
     return X
 
-def load_googlenews_vectors():
+def load_googlenews_vectors(path_to_word2vec):
     """
     load the word2vec GoogleNews vectors
     """

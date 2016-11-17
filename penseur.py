@@ -1,45 +1,64 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import cPickle as pickle
-import os, skipthoughts
+import os, skipthoughts, penseur_utils
 
 class Penseur:
 
-	def __init__(self):
-		self.model = skipthoughts.load_model()
-		self.sentences = None
-		self.vectors = None
+	def __init__(self, model_name=''):
+		self.loaded_custom_model = False
+		if model_name == '':
+			print 'Loading BookCorpus encoding model...'
+			self.model = skipthoughts.load_model()
+			self.sentences = None
+			self.vectors = None
+		else:
+			print 'Loading custom encoding model: ' + model_name
+			self.loaded_custom_model = True
+			self.model = penseur_utils.load_encoder(model_name)
+			self.sentences = pickle.load(open('data/' + model_name + '_sen.p', 'r'))
+			self.encode(self.sentences, verbose=True)
 		self.analogy_vector = None
 		self.word_table = None
 
 	# Loads both an encoding file and its sentences from disc
 	def load(self, filename):
-		self.vectors = np.load(filename + '_enc.np', 'r')
-		self.sentences = pickle.load(open(filename + '_sen.p', 'r'))
+		self.vectors = np.load('data/' + filename + '_encoder.np', 'r')
+		self.sentences = pickle.load(open('data/' + filename + '_sen.p', 'r'))
 
 	# Encodes a list of sentences
 	def encode(self, sentences):
 		self.sentences = sentences
-		self.vectors = skipthoughts.encode(self.model, sentences)
+		if self.loaded_custom_model:
+			self.vectors = penseur_utils.encode(self.model, sentences)
+		else:
+			self.vectors = skipthoughts.encode(self.model, sentences)
 
 	# Saves a set of encodings and the corresponding sentences to disc
 	def save(self, filename):
-		np.save(open(filename + '_enc.np', 'w'), self.vectors)
-		pickle.dump(self.sentences, open(filename + '_sen.p', 'w'))
+		if not os.path.exists('data/'):
+			os.makedirs('data')
+		np.save(open('data/' + filename + '_encoder.np', 'w'), self.vectors)
+		pickle.dump(self.sentences, open('data/' + filename + '_sen.p', 'w'))
 
 	# Returns a list of the sentences closest to the input sentence
 	def get_closest_sentences(self, query_sentence, num_results=5):
-		return skipthoughts.nn(self.model, self.sentences, self.vectors, query_sentence, num_results)
+		return skipthoughts.nn(self.model, self.sentences, self.vectors, query_sentence, self.loaded_custom_model, num_results)
 
 	# Returns a list of the words closest to the input word
 	def get_closest_words(self, query_word):
-		if self.word_table is None:
-			self.word_table = skipthoughts.word_features(self.model['btable'])
-		return skipthoughts.nn_words(self.model['btable'], self.word_table, query_word)
+		if self.loaded_custom_model:
+			if self.word_table is None:
+				self.word_table = skipthoughts.word_features(self.model['table'])
+			return skipthoughts.nn_words(self.model['table'], self.word_table, query_word)
+		else:
+			if self.word_table is None:
+				self.word_table = skipthoughts.word_features(self.model['btable'])
+			return skipthoughts.nn_words(self.model['btable'], self.word_table, query_word)
 
 	# Returns the vector of a query sentence within the current embedding space
 	def get_vector(self, query_sentence):
-		return skipthoughts.vector(self.model, self.sentences, self.vectors, query_sentence)
+		return skipthoughts.vector(self.model, self.sentences, self.vectors, query_sentence, self.loaded_custom_model)
 
 	# Returns the sentence of a query vector
 	def get_sentence(self, query_vector):
@@ -61,9 +80,16 @@ class Penseur:
 			if os.path.isfile(filename + '.np'):
 				self.analogy_vector = np.load(filename + '.np', 'r')
 			else:
-				self.analogy_vector = self.load_pairs(filename)
-				np.save(open(filename + '.np', 'w'), self.analogy_vector)
-		return self.get_sentence(self.get_vector(query_sentence) + self.analogy_vector)
+				self.load_and_save_analogy_file(filename)
+		try:
+			return self.get_sentence(self.get_vector(query_sentence) + self.analogy_vector)
+		except:
+			self.load_and_save_analogy_file(filename)
+			return self.get_sentence(self.get_vector(query_sentence) + self.analogy_vector)
+
+	def load_and_save_analogy_file(self, filename='q&a_pairs'):
+		self.analogy_vector = self.load_pairs(filename)
+		np.save(open(filename + '.np', 'w'), self.analogy_vector)
 
 	# Displays the plot of the sentence encodings after PCA (to 2D)
 	def display_PCA_plot(self):

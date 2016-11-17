@@ -15,6 +15,8 @@ from collections import OrderedDict, defaultdict
 from scipy.linalg import norm
 from nltk.tokenize import word_tokenize
 
+import penseur_utils
+
 profile = False
 
 #-----------------------------------------------------------------------------#
@@ -176,14 +178,17 @@ def preprocess(text):
     return X
 
 
-def nn(model, text, vectors, query, k=5):
+def nn(model, text, vectors, query, loaded_custom_model, k=5): #$ Added custom model parameter
     """
     Return the nearest neighbour sentences to query
     text: list of sentences
     vectors: the corresponding representations for text
     query: a string to search
     """
-    qf = encode(model, [query], verbose=False)
+    if loaded_custom_model: #$
+        qf = penseur_utils.encode(model, [query], verbose=False) #$
+    else: #$
+	    qf = encode(model, [query], verbose=False)
     qf /= norm(qf)
     scores = numpy.dot(qf, vectors.T).flatten()
     sorted_args = numpy.argsort(scores)[::-1]
@@ -197,8 +202,11 @@ def nn(model, text, vectors, query, k=5):
         sorted_sentences.append(sentences[i]) #$
     return sorted_sentences #$
 
-def vector(model, text, vectors, query): #$
-    qf = encode(model, [query], verbose=False) #$
+def vector(model, text, vectors, query, loaded_custom_model): #$
+    if loaded_custom_model: #$
+        qf = penseur_utils.encode(model, [query], verbose=False) #$
+    else: #$
+        qf = encode(model, [query], verbose=False) #$
     return qf / norm(qf) #$
 
 def sentence(model, text, vectors, qf): #$
