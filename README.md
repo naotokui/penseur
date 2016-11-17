@@ -18,7 +18,7 @@ The available methods are demonstrated below.
 ```python
 import penseur
 
-# Uses the traditional skip-thought encoding model referenced in the original paper.
+# Defaults to using the traditional skip-thought encoding model referenced in the original paper.
 p = penseur.Penseur()
 
 # Define a list of sentences
