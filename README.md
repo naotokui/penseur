@@ -5,10 +5,20 @@ This code provides an interface for the original skip-thought vector code by Rya
 
 For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations from 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so).
 
+Loading an encoder model requires a word2vec .bin file (for vocabulary expansion, as discussed in the original paper). There is a link to the one [here](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit). Place it in data/.
+
+During training an encoder or decoder, if Theano throws TypeError: ('An update must have the same type as the original shared variable (shared_var=\<TensorType(float32, matrix)>', etc.), adjust your python call to include specifying floatX to be equivalent to float32:
+
+```bash
+THEANO_FLAGS=mode=FAST_RUN,device=cpu,floatX=float32 python
+```
+
 The available methods are demonstrated below.
 
 ```python
 import penseur
+
+# Uses the traditional skip-thought encoding model referenced in the original paper.
 p = penseur.Penseur()
 
 # Define a list of sentences
@@ -62,16 +72,9 @@ p.display_PCA_plot_with_constraints(x_sentences, y_sentences)
 The methods below are available in penseur_utils.py. (CURRENTLY IN ALPHA, NOT GUARANTEED TO WORK)
 
 ```python
-# Train a new model from scratch
-import penseur_utils, cPickle
-name = 'larry_king'
-sentences = cPickle.load(open('larry_king_sen.p', 'r'))
-penseur_utils.train_model(name, sentences)
-
-# Train a decoder from scratch
-import penseur, cPickle
-p = penseur.Penseur()
-name = 'new_datas'
+# Train a new encoding model from scratch
+import penseur_utils
+name = 'ALPHA_data'
 sentences = ["Where is the dog?",\
 	"What have you done with the cat?",\
 	"Why have you killed all my animals?",\
@@ -82,12 +85,36 @@ sentences = ["Where is the dog?",\
 	"Get rid of my house!",\
 	"Where have you put the cat?",\
 	"Where is the dog with spots?"]
-import penseur_utils
+epochs = 6
+save_frequency = 5
+penseur_utils.train_encoder(name, sentences, epochs, save_frequency)
+
+# Load an encoding model
+import penseur
+name = 'ALPHA_data'
+p = penseur.Penseur(model_name=name)
+
+# Train a decoder from scratch
+import penseur, penseur_utils
+p = penseur.Penseur()
+name = 'ALPHA_data'
+sentences = ["Where is the dog?",\
+	"What have you done with the cat?",\
+	"Why have you killed all my animals?",\
+	"You're a monster!",\
+	"Get out of my house!",\
+	"Why are you here?",\
+	"Get out of my mansion!",\
+	"Get rid of my house!",\
+	"Where have you put the cat?",\
+	"Where is the dog with spots?"]
 epochs = 6
 savefreq = 5
 penseur_utils.train_decoder(name, sentences, p.model, epochs, savefreq)
 
 # Load a decoder
+import penseur_utils
+name = ALPHA_data
 dec = penseur_utils.load_decoder(name)
 
 # Decode a vector (returning either 1 sentence or n sentences, default is 1)
