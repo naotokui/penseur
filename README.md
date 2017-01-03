@@ -11,7 +11,7 @@ To use the skip-thought code, you will need:
 * [Keras](https://github.com/fchollet/keras) (for Semantic-Relatedness experiments only)
 * [gensim](https://radimrehurek.com/gensim/) (for vocabulary expansion when training new models)
 
-For those who haven't yet played with the original skip-thought code, it requires certain embedding files to work correctly. Details about obtaining these files are located in the "Getting Started" section of the skip-thought github page, but I've taken the opportunity to write a short download script that will run the original wget commands and place them in the proper location. The penseur code will always assume they are placed in a folder called 'data'.
+For those who haven't yet played with the original skip-thought code, it requires certain embedding files to work correctly. Details about obtaining these files are located in the "Getting Started" section of the skip-thought github page, but I've written a short download script that will run the original wget commands and place them in the proper location. The penseur code will always assume they are placed in a folder called 'data'.
 
 ```bash
 chmod +x download_essential_files.sh
