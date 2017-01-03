@@ -1,5 +1,7 @@
 '''
 Skip-thought vectors
+
+I, Daniel Ricks, have made multiple edits to this code. Every line I've changed or added has been marked with a '#$'.
 '''
 import os
 
