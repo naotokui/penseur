@@ -13,6 +13,8 @@ To use the skip-thought code, you will need:
 
 For those who haven't yet played with the original skip-thought code, it requires certain embedding files to work correctly. Details about obtaining these files are located in the "Getting Started" section of the skip-thought github page, but I've written a short download script that will run the original wget commands and place them in the proper location. The penseur code will always assume they are placed in a folder called 'data'.
 
+Keep in mind that two of these files (btable.npy and utable.npy) are very large (~2.3 GB each), so it might take a while.
+
 ```bash
 chmod +x download_essential_files.sh
 ./download_essential_files.sh
