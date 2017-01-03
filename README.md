@@ -1,5 +1,5 @@
 # penseur
-This code provides an interface for the original skip-thought vector code by Ryan Kiros et al. (2015).
+This code provides an interface for the original skip-thought vector code by Ryan Kiros et al. (2015)
 
 ## Usage
 
