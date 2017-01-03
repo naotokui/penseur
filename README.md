@@ -66,6 +66,8 @@ p.get_closest_sentences("Honey, where are my pants?")
 p.get_closest_sentences("Honey, where are my pants?", 10)
 
 # Test words against the vector space. This will return the words that are nearest to the query word
+# PS: This method tests against the encoding model tables, not the current dataset populating the embedding space.
+# PS, cont: This method may return unexpected words.
 p.get_closest_words("dog")
 # You can also request a specific number of results (default is 5)
 p.get_closest_words("dog", 10)
