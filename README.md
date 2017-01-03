@@ -5,7 +5,7 @@ This code provides an interface for the original skip-thought vector code by Rya
 
 For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations from 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so).
 
-Loading an encoder model requires a word2vec .bin file (for vocabulary expansion, as discussed in the original paper). There is a link to the one [here](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit). Place it in data/.
+Loading an encoder model requires a word2vec .bin file (for vocabulary expansion, as discussed in the original paper). There is a link to the one [here](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit). Create a directory in the main folder called 'data/' and put it there.
 
 During training an encoder or decoder, if Theano throws TypeError: ('An update must have the same type as the original shared variable (shared_var=\<TensorType(float32, matrix)>', etc.), adjust your python call to include specifying floatX to be equivalent to float32:
 
@@ -18,7 +18,7 @@ The available methods are demonstrated below.
 ```python
 import penseur
 
-# Uses the traditional skip-thought encoding model referenced in the original paper.
+# Defaults to using the traditional skip-thought encoding model referenced in the original paper.
 p = penseur.Penseur()
 
 # Define a list of sentences
