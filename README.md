@@ -16,6 +16,8 @@ For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43
 
 Loading an encoder model requires a word2vec .bin file (for vocabulary expansion, as discussed in the original paper). There is a link to the one [here](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit). **Place it in the data folder.**
 
+**Any encoding models or decoders you create should be in the data folder as well, but penseur will handle that for you as long as you use the proper commands.**
+
 During training an encoder or decoder, if Theano throws TypeError: ('An update must have the same type as the original shared variable (shared_var=\<TensorType(float32, matrix)>', etc.), adjust your python call to include specifying floatX to be equivalent to float32:
 
 ```bash
