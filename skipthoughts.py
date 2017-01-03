@@ -22,8 +22,8 @@ profile = False
 #-----------------------------------------------------------------------------#
 # Specify model and table locations here
 #-----------------------------------------------------------------------------#
-path_to_models = '/home/dan/Documents/skip-thoughts/data/'
-path_to_tables = '/home/dan/Documents/skip-thoughts/data/'
+path_to_models = os.getcwd() + '/data/'
+path_to_tables = os.getcwd() + '/data/'
 #-----------------------------------------------------------------------------#
 
 path_to_umodel = path_to_models + 'uni_skip.npz'
