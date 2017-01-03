@@ -1,5 +1,5 @@
 # penseur
-This code provides an interface for the original skip-thought vector code by Ryan Kiros et al. (2015)
+This code provides an interface for the [original skip-thought vector code](https://github.com/ryankiros/skip-thoughts) by Ryan Kiros et al. (2015)
 
 ## Dependencies and Setup
 To use the skip-thought code, you will need:
