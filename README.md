@@ -138,7 +138,7 @@ penseur_utils.train_decoder(name, sentences, p.model, epochs, savefreq)
 
 # Load a decoder
 import penseur_utils
-name = ALPHA_data
+name = 'ALPHA_data'
 dec = penseur_utils.load_decoder(name)
 
 # Decode a vector (returning either 1 sentence or n sentences, default is 1)
