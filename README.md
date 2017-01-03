@@ -1,7 +1,15 @@
 # penseur
 This code provides an interface for the original skip-thought vector code by Ryan Kiros et al. (2015)
 
-## Usage
+# Dependencies and Setup
+To use the skip-thought code, you will need:
+* Python 2.7
+* Theano 0.7
+* A recent version of [NumPy](http://www.numpy.org/) and [SciPy](http://www.scipy.org/)
+* [scikit-learn](http://scikit-learn.org/stable/index.html)
+* [NLTK 3](http://www.nltk.org/)
+* [Keras](https://github.com/fchollet/keras) (for Semantic-Relatedness experiments only)
+* [gensim](https://radimrehurek.com/gensim/) (for vocabulary expansion when training new models)
 
 For those who haven't yet played with the original skip-thought code, it requires certain embedding files to work correctly. Details about obtaining these files are located in the "Getting Started" section of the skip-thought github page, but I've taken the opportunity to write a short download script that will run the original wget commands and place them in the proper location. The penseur code will always assume they are placed in a folder called 'data'.
 
@@ -12,9 +20,10 @@ chmod +x download_essential_files.sh
 
 **The data folder should now include the following files:** bi_skip.npz, bi_skip.npz.pkl, btable.npy, dictionary.txt, uni_skip.npz, uni_skip.npz.pkl, utable.npy
 
-For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations from 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so). **Place it in the data folder.**
-
 Loading an encoder model requires a word2vec .bin file (for vocabulary expansion, as discussed in the original paper). There is a link to the one [here](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit). **Place it in the data folder.**
+
+## Usage
+For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations from 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so). **Place it in the data folder.**
 
 **Any encoding models or decoders you create should be in the data folder as well, but penseur will handle that for you as long as you use the proper commands.**
 
