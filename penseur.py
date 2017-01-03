@@ -134,7 +134,7 @@ class Penseur:
 		return np.dot(vectors, data.T).T
 
 	# Displays the sentence encodings after PCA with axis constraints
-	def display_PCA_plot_with_constraints(self, x_axis_sentences, y_axis_sentences):
+	def display_constrained_plot(self, x_axis_sentences, y_axis_sentences):
 		if len(x_axis_sentences) != 2 or len(y_axis_sentences) != 2:
 			sys.exit("Displaying PCA plot with constraints: expected 4 sentences. Got " + \
 			str(len(x_axis_sentences)) + ' and ' + str(len(y_axis_sentences)))

@@ -66,7 +66,7 @@ p.display_PCA_plot()
 # data is organized how you choose.
 x_sentences = ['I have 10 cats.', 'I have 100 cats.']
 y_sentences = ['You are my friend.', 'You are my enemy.']
-p.display_PCA_plot_with_constraints(x_sentences, y_sentences)
+p.display_constrained_plot(x_sentences, y_sentences)
 ```
 
 The methods below are available in penseur_utils.py.
