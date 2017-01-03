@@ -25,7 +25,7 @@ Loading an encoder model requires a word2vec .bin file (for vocabulary expansion
 ## Usage
 For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations from 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so). **Place it in the data folder.**
 
-**Any encoding models or decoders you create should be in the data folder as well, but penseur will handle that for you as long as you use the proper commands.**
+**Any other encoding models or decoders you create should be in the data folder as well, but penseur will handle that for you as long as you use the proper commands.**
 
 During training an encoder or decoder, if Theano throws TypeError: ('An update must have the same type as the original shared variable (shared_var=\<TensorType(float32, matrix)>', etc.), adjust your python call to include specifying floatX to be equivalent to float32:
 
