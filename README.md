@@ -3,9 +3,20 @@ This code provides an interface for the original skip-thought vector code by Rya
 
 ## Usage
 
-For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations from 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so).
+For those who haven't yet played with the original skip-thought code, it requires embedding files to work correctly. Details about obtaining these files are located in the "Getting Started" section of the skip-thought github page, but I've taken the opportunity to write a short download script that will run their wget commands and place them in the proper location. The penseur code will always assume they are placed in a folder called 'data'.
 
-Loading an encoder model requires a word2vec .bin file (for vocabulary expansion, as discussed in the original paper). There is a link to the one [here](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit). Create a directory in the main folder called 'data/' and put it there.
+**The data folder should now include the following files:**
+	bi_skip.npz
+	bi_skip.npz.pkl
+	btable.npy
+	dictionary.txt
+	uni_skip.npz
+	uni_skip.npz.pkl
+	utable.npy
+
+For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43dml3MHVENGJoeXM) to a pickle file of a list of sentences from Larry King transcripts. It's over a million lines long and consists of transcripts of conversations from 2000-2011. I don't have enough space to host the encodings file, so you'll still have to generate that (which could take a day or so). **Place it in the data folder.**
+
+Loading an encoder model requires a word2vec .bin file (for vocabulary expansion, as discussed in the original paper). There is a link to the one [here](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit). **Place it in the data folder.**
 
 During training an encoder or decoder, if Theano throws TypeError: ('An update must have the same type as the original shared variable (shared_var=\<TensorType(float32, matrix)>', etc.), adjust your python call to include specifying floatX to be equivalent to float32:
 
