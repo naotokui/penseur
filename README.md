@@ -32,7 +32,7 @@ For convenience, here is a [link](https://drive.google.com/open?id=0B3lpCS07rg43
 During training an encoder or decoder, if Theano throws TypeError: ('An update must have the same type as the original shared variable (shared_var=\<TensorType(float32, matrix)>', etc.), adjust your python call to include specifying floatX to be equivalent to float32:
 
 ```bash
-THEANO_FLAGS=mode=FAST_RUN,device=cpu,floatX=float32 python
+THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 python
 ```
 
 The available methods are demonstrated below.
