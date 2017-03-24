@@ -195,14 +195,11 @@ def nn(model, text, vectors, query, loaded_custom_model, k=5): #$ Added custom m
     scores = numpy.dot(qf, vectors.T).flatten()
     sorted_args = numpy.argsort(scores)[::-1]
     sentences = [text[a] for a in sorted_args[:k]]
-#    print 'QUERY: ' + query #$
-#    print 'NEAREST: ' #$
     sorted_sentences = [] #$
-#    for i, s in enumerate(sentences): #$
-#        print s, sorted_args[i] #$
     for i in xrange(len(sentences)): #$
         sorted_sentences.append(sentences[i]) #$
     return sorted_sentences #$
+
 
 def vector(model, text, vectors, query, loaded_custom_model): #$
     if loaded_custom_model: #$
@@ -211,11 +208,13 @@ def vector(model, text, vectors, query, loaded_custom_model): #$
         qf = encode(model, [query], verbose=False) #$
     return qf / norm(qf) #$
 
+
 def sentence(model, text, vectors, qf): #$
     scores = numpy.dot(qf, vectors.T).flatten() #$
     sorted_args = numpy.argsort(scores)[::-1] #$
     sentences = [text[a] for a in sorted_args[:1]] #$
     return sentences[0] #$
+
 
 def word_features(table):
     """

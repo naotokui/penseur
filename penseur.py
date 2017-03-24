@@ -46,19 +46,25 @@ class Penseur:
 		return skipthoughts.nn(self.model, self.sentences, self.vectors, query_sentence, self.loaded_custom_model, num_results)
 
 	# Returns a list of the words closest to the input word
-	def get_closest_words(self, query_word):
+	def get_closest_words(self, query_word, num_results=5):
 		if self.loaded_custom_model:
 			if self.word_table is None:
 				self.word_table = skipthoughts.word_features(self.model['table'])
-			return skipthoughts.nn_words(self.model['table'], self.word_table, query_word)
+			return skipthoughts.nn_words(self.model['table'], self.word_table, query_word, num_results)
 		else:
 			if self.word_table is None:
 				self.word_table = skipthoughts.word_features(self.model['btable'])
-			return skipthoughts.nn_words(self.model['btable'], self.word_table, query_word)
+			return skipthoughts.nn_words(self.model['btable'], self.word_table, query_word, num_results)
 
 	# Returns the vector of a query sentence within the current embedding space
 	def get_vector(self, query_sentence):
 		return skipthoughts.vector(self.model, self.sentences, self.vectors, query_sentence, self.loaded_custom_model)
+
+	# Returns a simple distance between sentences
+	def get_distance(self, query_sentence1, query_sentence2):
+		v1 = self.get_vector(query_sentence1)
+		v2 = self.get_vector(query_sentence2)
+		return (abs(v1) - abs(v2)).sum()
 
 	# Returns the sentence of a query vector
 	def get_sentence(self, query_vector):
