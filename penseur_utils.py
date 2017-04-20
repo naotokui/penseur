@@ -7,7 +7,7 @@ import cPickle as pickle
 def train_encoder(name_of_data, sentences, max_epochs=5, save_frequency=1000):
 	if not os.path.exists('data/'):
 		os.makedirs('data')
-	sys.path.insert(0, 'training/')
+	sys.path.insert(1, 'training/')
 	import vocab
 	worddict, wordcount = vocab.build_dictionary(sentences)
 	vocab.save_dictionary(worddict, wordcount, 'data/' + name_of_data + '_dictionary.pkl')
@@ -29,20 +29,20 @@ def train_encoder(name_of_data, sentences, max_epochs=5, save_frequency=1000):
 	train_temp.trainer(sentences)
 
 def load_encoder(model_name):
-	sys.path.insert(0, 'training/')
+	sys.path.insert(1, 'training/')
 	import tools
 	return tools.load_model('data/' + model_name + '_encoder.npz', 'data/' + model_name + '_dictionary.pkl',\
 		'data/ja_word2vec/entity_vector.model.bin')
 
 def encode(encoder, sentences, verbose=False):
-	sys.path.insert(0, 'training/')
+	sys.path.insert(1, 'training/')
 	import tools
 	return tools.encode(encoder, sentences)
 
 def train_decoder(name_of_data, sentences, model, max_epochs=5, save_frequency=1000):
 	if not os.path.exists('data/'):
 		os.makedirs('data')
-	sys.path.insert(0, 'decoding/')
+	sys.path.insert(1, 'decoding/')
 	import vocab
 	worddict, wordcount = vocab.build_dictionary(sentences)
 	vocab.save_dictionary(worddict, wordcount, 'data/' + name_of_data + '_dictionary.pkl')
@@ -63,12 +63,12 @@ def train_decoder(name_of_data, sentences, model, max_epochs=5, save_frequency=1
 	return train_temp.trainer(sentences, sentences, model)
 
 def load_decoder(decoder_name):
-	sys.path.insert(0, 'decoding/')
+	sys.path.insert(1, 'decoding/')
 	import tools
 	return tools.load_model('data/' + decoder_name + '_decoder.npz', 'data/' + decoder_name + '_dictionary.pkl')
 
 def decode(decoder, vector, num_results=1):
-	sys.path.insert(0, 'decoding/')
+	sys.path.insert(1, 'decoding/')
 	import tools
 	sentences = tools.run_sampler(decoder, vector, beam_width=num_results)
 	if num_results == 1:
