@@ -27,12 +27,12 @@ class Penseur:
 		self.sentences = pickle.load(open('data/' + filename + '_sen.p', 'r'))
 
 	# Encodes a list of sentences
-	def encode(self, sentences):
+	def encode(self, sentences, verbose=False):
 		self.sentences = sentences
 		if self.loaded_custom_model:
-			self.vectors = penseur_utils.encode(self.model, sentences)
+			self.vectors = penseur_utils.encode(self.model, sentences, verbose)
 		else:
-			self.vectors = skipthoughts.encode(self.model, sentences)
+			self.vectors = skipthoughts.encode(self.model, sentences, verbose)
 
 	# Saves a set of encodings and the corresponding sentences to disc
 	def save(self, filename):
