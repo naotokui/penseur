@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 A selection of functions for extracting vectors
 Encoder + vocab expansion
@@ -139,13 +140,20 @@ def preprocess(text):
     """
     Preprocess text for encoder
     """
+    
+    import tinysegmenter
+    segmenter = tinysegmenter.TinySegmenter()
+    
     X = []
-    sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
+    sent_detector = nltk.RegexpTokenizer(u'[^　「」！？。.]*[！？。.]')
+#    sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
     for t in text:
         sents = sent_detector.tokenize(t)
+        print sents
         result = ''
         for s in sents:
-            tokens = word_tokenize(s)
+#            tokens = word_tokenize(s)
+            tokens = segmenter.tokenize(s)
             result += ' ' + ' '.join(tokens)
         X.append(result)
     return X

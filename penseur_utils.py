@@ -32,7 +32,7 @@ def load_encoder(model_name):
 	sys.path.insert(0, 'training/')
 	import tools
 	return tools.load_model('data/' + model_name + '_encoder.npz', 'data/' + model_name + '_dictionary.pkl',\
-		'data/GoogleNews-vectors-negative300.bin')
+		'data/ja_word2vec/entity_vector.model.bin')
 
 def encode(encoder, sentences, verbose=False):
 	sys.path.insert(0, 'training/')
