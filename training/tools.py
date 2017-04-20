@@ -14,6 +14,7 @@ from collections import OrderedDict, defaultdict
 from nltk.tokenize import word_tokenize
 from scipy.linalg import norm
 from gensim.models import Word2Vec as word2vec
+from gensim.models import KeyedVectors
 from sklearn.linear_model import LinearRegression
 
 from utils import load_params, init_tparams
@@ -153,7 +154,7 @@ def load_googlenews_vectors(path_to_word2vec):
     """
     load the word2vec GoogleNews vectors
     """
-    embed_map = word2vec.load_word2vec_format(path_to_word2vec, binary=True)
+    embed_map = KeyedVectors.load_word2vec_format(path_to_word2vec, binary=True)
     return embed_map
 
 def lookup_table(options, embed_map, worddict, word_idict, f_emb, use_norm=False):
@@ -217,7 +218,7 @@ def apply_regressor(clf, embed_map, use_norm=False):
     wordvecs = OrderedDict()
     for i, w in enumerate(embed_map.vocab.keys()):
         if '_' not in w:
-            wordvecs[w] = clf.predict(embed_map[w]).astype('float32')
+            wordvecs[w] = clf.predict([embed_map[w]]).astype('float32')
             if use_norm:
                 wordvecs[w] /= norm(wordvecs[w])
     return wordvecs
