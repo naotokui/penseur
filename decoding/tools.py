@@ -10,6 +10,9 @@ import cPickle as pkl
 import numpy
 
 from utils import load_params, init_tparams
+
+import model
+reload(model)
 from model import init_params, build_sampler
 from search import gen_sample
 

@@ -16,8 +16,9 @@ class Penseur:
 			print 'Loading custom encoding model: ' + model_name
 			self.loaded_custom_model = True
 			self.model = penseur_utils.load_encoder(model_name)
-			self.sentences = pickle.load(open('data/' + model_name + '_sen.p', 'r'))
-			self.encode(self.sentences, verbose=True)
+			self.sentences = None #pickle.load(open('data/' + model_name + '_sen.p', 'r'))
+			self.vectors = None
+			#self.encode(self.sentences, verbose=True)
 		self.analogy_vector = None
 		self.word_table = None
 
@@ -33,6 +34,14 @@ class Penseur:
 			self.vectors = penseur_utils.encode(self.model, sentences, verbose)
 		else:
 			self.vectors = skipthoughts.encode(self.model, sentences, verbose)
+		return self.vectors
+
+	def encode_single_sentence(self, text, verbose = False):
+		if self.loaded_custom_model:
+			vec = penseur_utils.encode(self.model, [text], verbose)
+		else:
+			vec = skipthoughts.encode(self.model, [text], verbose)
+		return vec 
 
 	# Saves a set of encodings and the corresponding sentences to disc
 	def save(self, filename):
