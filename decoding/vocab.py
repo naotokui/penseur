@@ -5,7 +5,7 @@ import cPickle as pkl
 import numpy
 from collections import OrderedDict
 
-def build_dictionary(text):
+def build_dictionary(text, max_vocab_num = 0):
     """
     Build a dictionary
     text: list of sentences (pre-tokenized)
@@ -21,11 +21,15 @@ def build_dictionary(text):
     freqs = wordcount.values()
     sorted_idx = numpy.argsort(freqs)[::-1]
 
+    wordcount_ = OrderedDict()
     worddict = OrderedDict()
     for idx, sidx in enumerate(sorted_idx):
-        worddict[words[sidx]] = idx+2 # 0: <eos>, 1: <unk>
-
-    return worddict, wordcount
+        if max_vocab_num < 0 or idx < max_vocab_num:
+            worddict[words[sidx]] = idx+2 # 0: <eos>, 1: <unk>
+            wordcount_[words[sidx]] = wordcount[words[sidx]]
+        else:
+            worddict[words[sidx]] = 1 # force to be <unk>
+    return worddict, wordcount_
 
 def load_dictionary(loc='/ais/gobi3/u/rkiros/bookgen/book_dictionary_large.pkl'):
     """
