@@ -77,7 +77,7 @@ class HomogeneousData():
     def __iter__(self):
         return self
 
-def prepare_data(caps, features, worddict, model, maxlen=None, n_words=10000):
+def prepare_data(caps, features, worddict, model, p, maxlen=None, n_words=10000):
     """
     Put data into format useable by the model
     """
@@ -106,7 +106,9 @@ def prepare_data(caps, features, worddict, model, maxlen=None, n_words=10000):
             return None, None, None
 
     # Compute skip-thought vectors for this mini-batch
-    feat_list = skipthoughts.encode(model, feat_list, use_eos=False, verbose=False)
+    # encode original BookCorpus model or custome made model
+    p.encode(feat_list, verbose=False)
+    feat_list = p.vectors
 
     y = numpy.zeros((len(feat_list), len(feat_list[0]))).astype('float32')
     for idx, ff in enumerate(feat_list):
