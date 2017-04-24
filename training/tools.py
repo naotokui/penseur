@@ -19,6 +19,10 @@ from gensim.models import KeyedVectors
 from sklearn.linear_model import LinearRegression
 
 from utils import load_params, init_tparams
+
+import model
+reload(model)
+
 from model import init_params, build_encoder, build_encoder_w2v
 
 #-----------------------------------------------------------------------------#
@@ -145,17 +149,16 @@ def preprocess(text):
     segmenter = tinysegmenter.TinySegmenter()
     
     X = []
-    sent_detector = nltk.RegexpTokenizer(u'[^　「」！？。.]*[！？。.]')
-#    sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
+    #    sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
+    sent_detector = nltk.RegexpTokenizer(u'[^　！？。]*[！？。]')
     for t in text:
         sents = sent_detector.tokenize(t)
-        print sents
-        result = ''
         for s in sents:
-#            tokens = word_tokenize(s)
+            #tokens = word_tokenize(s)
             tokens = segmenter.tokenize(s)
-            result += ' ' + ' '.join(tokens)
-        X.append(result)
+			result = ' '.join(tokens)
+	        if len(result) > 0: 
+    	        X.append(result)
     return X
 
 def load_googlenews_vectors(path_to_word2vec):
@@ -209,7 +212,8 @@ def train_regressor(options, embed_map, wordvecs, worddict):
             count += 1
 
     # Get the vectors for all words in 'shared'
-    w2v = numpy.zeros((len(shared), 300), dtype='float32')
+    vector_size = len(embed_map[embed_map.vocab.keys()[0]])
+    w2v = numpy.zeros((len(shared), vector_size), dtype='float32')
     sg = numpy.zeros((len(shared), options['dim_word']), dtype='float32')
     for w in shared.keys():
         w2v[shared[w]] = embed_map[w]
