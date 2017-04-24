@@ -82,10 +82,13 @@ def prepare_data(seqs_x, seqs_y, seqs_z, worddict, maxlen=None, n_words=20000):
     seqsY = []
     seqsZ = []
     for cc in seqs_x:
+        #seqsX.append([worddict[w] for w in cc.split()])
         seqsX.append([worddict[w] if worddict[w] < n_words else 1 for w in cc.split()])
     for cc in seqs_y:
+        #seqsY.append([worddict[w] for w in cc.split()])
         seqsY.append([worddict[w] if worddict[w] < n_words else 1 for w in cc.split()])
     for cc in seqs_z:
+        #seqsZ.append([worddict[w] for w in cc.split()])
         seqsZ.append([worddict[w] if worddict[w] < n_words else 1 for w in cc.split()])
     seqs_x = seqsX
     seqs_y = seqsY

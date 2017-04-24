@@ -14,6 +14,7 @@ import sys
 import time
 
 import homogeneous_data
+reload(homogeneous_data)
 
 from theano.sandbox.rng_mrg import MRG_RandomStreams as RandomStreams
 from collections import defaultdict
@@ -21,15 +22,20 @@ from collections import defaultdict
 from utils import *
 from layers import get_layer, param_init_fflayer, fflayer, param_init_gru, gru_layer
 from optim import adam
+
+import model
+reload(model) # just make sure not to load training/model.py 
 from model import init_params, build_model, build_sampler
 from vocab import load_dictionary
 from search import gen_sample
 
 # main trainer
-def trainer(X, C, stmodel,
-            dimctx=4800, #vector dimensionality
+def trainer(X, C, stmodel, p,
+            dimctx=2400, #vector dimensionality
+#            dimctx=4800, #vector dimensionality
             dim_word=620, # word vector dimensionality
-            dim=1600, # the number of GRU units
+            dim=2400,
+#            dim=1600, # the number of GRU units
             encoder='gru',
             decoder='gru',
             doutput=False,
@@ -71,6 +77,7 @@ def trainer(X, C, stmodel,
     model_options['sampleFreq'] = sampleFreq
     model_options['reload_'] = reload_
 
+    print model
     print model_options
 
     # reload options
@@ -107,6 +114,7 @@ def trainer(X, C, stmodel,
     word_idict[0] = '<eos>'
     word_idict[1] = 'UNK'
 
+    print model
     print 'Building model'
     params = init_params(model_options, preemb=preemb)
     # reload parameters
@@ -177,8 +185,8 @@ def trainer(X, C, stmodel,
             n_samples += len(x)
             uidx += 1
 
-            x, mask, ctx = homogeneous_data.prepare_data(x, c, worddict, stmodel, maxlen=maxlen_w, n_words=n_words)
-
+            x, mask, ctx = homogeneous_data.prepare_data(x, c, worddict, stmodel, p, maxlen=maxlen_w, n_words=n_words)
+            
             if x == None:
                 print 'Minibatch with zero sample under length ', maxlen_w
                 uidx -= 1

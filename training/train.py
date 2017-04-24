@@ -14,13 +14,23 @@ import sys
 import time
 
 import homogeneous_data
+reload(homogeneous_data)
 
 from theano.sandbox.rng_mrg import MRG_RandomStreams as RandomStreams
 
 from utils import *
 from layers import get_layer, param_init_fflayer, fflayer, param_init_gru, gru_layer
 from optim import adam
+
+
+import model
+reload(model) # just make sure not to load decoding/model.py 
+
 from model import init_params, build_model
+
+import vocab
+reload(vocab)
+
 from vocab import load_dictionary
 
 # main trainer
@@ -154,7 +164,7 @@ def trainer(X,
 
             x, x_mask, y, y_mask, z, z_mask = homogeneous_data.prepare_data(x, y, z, worddict, maxlen=maxlen_w, n_words=n_words)
 
-            if x == None:
+            if x is None:
                 print 'Minibatch with zero sample under length ', maxlen_w
                 uidx -= 1
                 continue
