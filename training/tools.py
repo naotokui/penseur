@@ -150,15 +150,15 @@ def preprocess(text):
     
     X = []
     #    sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
-    sent_detector = nltk.RegexpTokenizer(u'[^　！？。]*[！？。]')
+    #sent_detector = nltk.RegexpTokenizer(u'[^　！？。]*[！？。]')
     for t in text:
-        sents = sent_detector.tokenize(t)
-        for s in sents:
-            #tokens = word_tokenize(s)
-            tokens = segmenter.tokenize(s)
-			result = ' '.join(tokens)
-	        if len(result) > 0: 
-    	        X.append(result)
+        #sents = sent_detector.tokenize(t)
+        #for s in sents:
+        #tokens = word_tokenize(s)
+        tokens = segmenter.tokenize(t)
+        result = ' '.join(tokens)
+        if len(result) > 0: 
+    	    X.append(result)
     return X
 
 def load_googlenews_vectors(path_to_word2vec):
