@@ -246,6 +246,13 @@ def nn_words(table, wordvecs, query, k=10):
         sorted_words.append(str(words[i]))
     return sorted_words
 
+def most_similar_words(w2v_model, query_word, num_results):
+    try:
+        words = w2v_model.most_similar(query_word,  topn=num_results)
+        return [ w[0] for w in words]
+    except:
+        return []
+        
 
 def _p(pp, name):
     """
