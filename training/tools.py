@@ -25,6 +25,9 @@ reload(model)
 
 from model import init_params, build_encoder, build_encoder_w2v
 
+import MeCab
+mt = MeCab.Tagger("-Ochasen")
+
 #-----------------------------------------------------------------------------#
 # Specify model and dictionary locations here
 #-----------------------------------------------------------------------------#
@@ -140,13 +143,31 @@ def encode(model, X, use_norm=True, verbose=False, batch_size=128, use_eos=False
     
     return features
 
+def wakati_text_mecab(text):
+    if type(text) == unicode:
+        text = text.encode("utf-8")
+    res = mt.parseToNode(text)
+    
+    words = []
+    try:
+        while res:
+            surface = res.surface.decode('utf-8')
+            part = res.feature.split(",")[0].decode('utf-8')
+            if part != u"BOS/EOS":
+                words.append(surface)
+            res = res.next
+    except Exception as ex:
+        print ex
+        
+    return ' '.join(words)
+
 def preprocess(text):
     """
     Preprocess text for encoder
     """
     
-    import tinysegmenter
-    segmenter = tinysegmenter.TinySegmenter()
+    #import tinysegmenter
+    #segmenter = tinysegmenter.TinySegmenter()
     
     X = []
     #    sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
@@ -155,8 +176,9 @@ def preprocess(text):
         #sents = sent_detector.tokenize(t)
         #for s in sents:
         #tokens = word_tokenize(s)
-        tokens = segmenter.tokenize(t)
-        result = ' '.join(tokens)
+        result = wakati_text_mecab(t)
+        # tokens = segmenter.tokenize(t)
+        # result = ' '.join(tokens)
         if len(result) > 0: 
     	    X.append(result)
     return X
