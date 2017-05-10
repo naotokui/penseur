@@ -55,7 +55,11 @@ class Penseur:
 		return skipthoughts.nn(self.model, self.sentences, self.vectors, query_sentence, self.loaded_custom_model, num_results)
 
 	# Returns a list of the words closest to the input word
-	def get_closest_words(self, query_word, num_results=5):
+	def get_closest_words(self, query_word, num_results=5, use_w2v=False):
+		# use word2vec model directly
+		if use_w2v:
+			return skipthoughts.most_similar_words(self.model['embed_map'], query_word, num_results)
+		
 		if self.loaded_custom_model:
 			if self.word_table is None:
 				self.word_table = skipthoughts.word_features(self.model['table'])

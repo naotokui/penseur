@@ -40,6 +40,9 @@ def load_model(path_to_model, path_to_dictionary, path_to_word2vec, embed_map=No
     """
     Load all model components + apply vocab expansion
     """
+
+    print path_to_word2vec
+
     # Load the worddict
     print 'Loading dictionary...'
     with open(path_to_dictionary, 'rb') as f:
@@ -88,6 +91,7 @@ def load_model(path_to_model, path_to_dictionary, path_to_word2vec, embed_map=No
     model['options'] = options
     model['table'] = table
     model['f_w2v'] = f_w2v
+    model['embed_map'] = embed_map
 
     return model
 

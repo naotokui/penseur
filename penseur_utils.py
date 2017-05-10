@@ -35,6 +35,7 @@ def load_encoder(model_name):
 	import tools
 	reload(tools)
 	return tools.load_model('data/' + model_name + '_encoder.npz', 'data/' + model_name + '_dictionary.pkl',\
+		#'data/GoogleNews-vectors-negative300.bin')
 		'data/ja_word2vec/entity_vector.model.bin')
 
 def encode(encoder, sentences, verbose=False):
@@ -74,12 +75,11 @@ def load_decoder(decoder_name):
 	reload(tools)
 	return tools.load_model('data/' + decoder_name + '_decoder.npz', 'data/' + decoder_name + '_dictionary.pkl')
 
-def decode(decoder, vector, num_results=1):
+def decode(decoder, vector, num_results=1, stochastic=False, use_unk=False):
 	sys.path.insert(1, 'decoding/')
 	import tools
 	reload(tools)
-	sentences = tools.run_sampler(decoder, vector, beam_width=num_results)
+	sentences = tools.run_sampler(decoder, vector, beam_width=num_results, stochastic=stochastic,use_unk=use_unk)
 	if num_results == 1:
 		return sentences[0]
 	return sentences
-
