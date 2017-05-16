@@ -80,6 +80,6 @@ def run_sampler(dec, c, beam_width=1, stochastic=False, use_unk=False):
         sample = [sample]
     for c in sample:
         text.append(' '.join([dec['word_idict'][w] for w in c[:-1]]))
-    return text
+    return text, score
 
 

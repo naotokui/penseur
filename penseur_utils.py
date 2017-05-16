@@ -79,7 +79,7 @@ def decode(decoder, vector, num_results=1, stochastic=False, use_unk=False):
 	sys.path.insert(1, 'decoding/')
 	import tools
 	reload(tools)
-	sentences = tools.run_sampler(decoder, vector, beam_width=num_results, stochastic=stochastic,use_unk=use_unk)
+	sentences, scores = tools.run_sampler(decoder, vector, beam_width=num_results, stochastic=stochastic,use_unk=use_unk)
 	if num_results == 1:
-		return sentences[0]
-	return sentences
+		return sentences[0], scores
+	return sentences, scores
